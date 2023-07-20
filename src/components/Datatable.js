@@ -67,13 +67,13 @@ const Datatable = ({ tableData }) => {
         <>
             {/* Rendering the table */}
             <div className="flex flex-col mx-auto shadow-2xl">
-                <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div className="overflow-x-auto mobile:mx-12 lg:-mx-8">
                     <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
                         <div className="overflow-hidden">
                             <table className="min-w-full text-center text-sm font-light">
                                 <thead className="border-b bg-neutral-800 font-medium text-white dark:border-neutral-500 dark:bg-neutral-900">
                                     <tr>
-                                        
+
                                         {/* Rendering table headers */}
                                         {headers.map((header) => (
                                             <th key={header} scope="col" className="px-6 py-4">
@@ -119,7 +119,7 @@ const Datatable = ({ tableData }) => {
             <div className="mt-10 text-center">
 
                 {/* CSVLink component to create a download link for the CSV file */}
-                <CSVLink data={csvData} filename={'data.csv'} className="btn bg-black p-2 text-white font-medium">
+                <CSVLink data={csvData} filename={'data.csv'} className="btn text-center bg-black p-2 text-white font-medium ">
                     Download CSV
                 </CSVLink>
             </div>
