@@ -54,7 +54,7 @@ const Datatable:FC <DatatableProps> = ({ tableData }) => {
             }
 
             if(header === 'Phone' && !isPhoneNumberValid(value)){
-                return window.alert("Invalid phone number")
+                return window.confirm("Invalid phone number")
             }
         }
         updatedData[index][header] = value;

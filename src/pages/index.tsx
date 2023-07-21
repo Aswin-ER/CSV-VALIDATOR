@@ -7,10 +7,10 @@ interface Tabledata {
 }
 
 const Home: FC = ()=> {
-  const [tableData, setTableData] = useState<Tabledata>();
+  const [tableData, setTableData] = useState<any | undefined>();
 
   // Receive the parsed table data from the child component and update the state.
-  const handleTableDataChange = (data: Tabledata | undefined) => {
+  const handleTableDataChange = (data: any | undefined) => {
     setTableData(data);
   };
 
