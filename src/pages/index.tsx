@@ -1,10 +1,6 @@
-import Datatable from '@/components/Datatable';
-import FilePicker from '@/components/FilePicker';
+import Datatable from '../components/Datatable';
+import FilePicker from '../components/FilePicker';
 import React, { useState,FC } from 'react';
-
-interface Tabledata {
-  [key: string]: string | number;
-}
 
 const Home: FC = ()=> {
   const [tableData, setTableData] = useState<any | undefined>();
