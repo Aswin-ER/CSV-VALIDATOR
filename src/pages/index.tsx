@@ -2,11 +2,15 @@ import Datatable from '@/components/Datatable';
 import FilePicker from '@/components/FilePicker';
 import React, { useState,FC } from 'react';
 
+interface Tabledata {
+  [key: string]: string | number;
+}
+
 const Home: FC = ()=> {
-  const [tableData, setTableData] = useState<any | undefined>();
+  const [tableData, setTableData] = useState<Tabledata>();
 
   // Receive the parsed table data from the child component and update the state.
-  const handleTableDataChange = (data: any | undefined) => {
+  const handleTableDataChange = (data: Tabledata | undefined) => {
     setTableData(data);
   };
 
