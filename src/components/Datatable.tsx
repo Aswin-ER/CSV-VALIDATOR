@@ -1,15 +1,17 @@
 import React, { FC, useState } from 'react';
 import { CSVLink } from 'react-csv';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-interface TabledataItems{
+interface TabledataItems {
     [key: string]: string | number;
 }
 
-interface DatatableProps{
+interface DatatableProps {
     tableData: TabledataItems[];
 }
 
-const Datatable:FC <DatatableProps> = ({ tableData }) => {
+const Datatable: FC<DatatableProps> = ({ tableData }) => {
 
     // State to track the edited data
     const [editedData, setEditedData] = useState<TabledataItems[]>(tableData);
@@ -38,27 +40,28 @@ const Datatable:FC <DatatableProps> = ({ tableData }) => {
     };
 
     // Function to validate the phone number field
-    const isPhoneNumberValid = (phoneNumber:string):boolean => {
+    const isPhoneNumberValid = (phoneNumber: string): boolean => {
         // Assuming Indian phone numbers are 10 digits long and start with 7, 8, or 9
         return /^[789]\d{9}$/.test(phoneNumber);
     };
 
     // Function to handle data editing
-    const handleEditData = (index:number, header:string, value:string) => {
+    const handleEditData = (index: number, header: string, value: string) => {
         // Make a copy of the edited data to avoid directly modifying the state
         const updatedData = [...editedData];
 
-        if(value !== null){
-            if(header === 'Name' && !isNameValid(value)){
-                return window.confirm("Invalid name")
+        if (value !== null) {
+            if (header === 'Name' && !isNameValid(value)) {
+                return toast.error("Invalid Name")
             }
 
-            if(header === 'Phone' && !isPhoneNumberValid(value)){
-                return window.confirm("Invalid phone number")
+            if (header === 'Phone' && !isPhoneNumberValid(value)) {
+                return toast.error("Invalid phone number")
             }
         }
         updatedData[index][header] = value;
         setEditedData(updatedData);
+        toast.success("Updated entry")
     };
 
     // Function to handle entry deletion with confirmation dialog
@@ -68,6 +71,7 @@ const Datatable:FC <DatatableProps> = ({ tableData }) => {
             const updatedData = [...editedData];
             updatedData.splice(index, 1);
             setEditedData(updatedData);
+            toast.success("Deleted entry")
         }
     };
 
@@ -96,13 +100,13 @@ const Datatable:FC <DatatableProps> = ({ tableData }) => {
                                 <tbody>
 
                                     {/* Rendering table rows */}
-                                    {editedData.map((row:any, index:number) => {
+                                    {editedData.map((row: any, index: number) => {
                                         // Check if the name and phone number are valid
                                         const isNameValidated = isNameValid(row['Name']);
                                         const isPhoneNumberValidated = isPhoneNumberValid(row['Phone']);
 
                                         return (
-                                            <tr key={index} className={`border-b dark:border-neutral-500 ${row['Name'] && row['Phone'] && (!isNameValidated || !isPhoneNumberValidated)? 'bg-red-200': ''}`}>
+                                            <tr key={index} className={`border-b dark:border-neutral-500 ${row['Name'] && row['Phone'] && (!isNameValidated || !isPhoneNumberValidated) ? 'bg-red-200' : ''}`}>
                                                 {headers.map((header) => (
                                                     <td key={`${index}-${header}`} className={`whitespace-nowrap px-6 py-4 font-medium ${header === 'Name' && !isNameValidated ? 'text-red-600' : ''} ${header === 'Phone' && !isPhoneNumberValidated ? 'text-red-600' : ''}`}
                                                         contentEditable
