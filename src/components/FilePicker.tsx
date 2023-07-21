@@ -21,12 +21,13 @@ const FilePicker: FC<FilePickerProps> = ({ onTableDataChange }: FilePickerProps)
 
         if (file.type === 'text/csv') {
 
+            
             // Convert CSV to JSON Using Papaparse Library
             papaparse.parse(file, {
                 header: true,
                 complete: function (results: any | null): void {
                     console.log("papaparse worked", results);
-
+                    // toast.info("Loading file Please wait")
                     setfirst(results.data);
 
                     //Callback function passed from the parent component 
@@ -75,7 +76,4 @@ const FilePicker: FC<FilePickerProps> = ({ onTableDataChange }: FilePickerProps)
 }
 
 export default FilePicker;
-function getStaticPath() {
-    throw new Error('Function not implemented.');
-}
 
