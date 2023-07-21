@@ -1,12 +1,12 @@
 import Datatable from '@/components/Datatable';
 import FilePicker from '@/components/FilePicker';
-import React, { useState } from 'react';
+import React, { useState,FC } from 'react';
 
-export default function Home() {
-  const [tableData, setTableData] = useState();
+const Home: FC = ()=> {
+  const [tableData, setTableData] = useState<any | undefined>();
 
   // Receive the parsed table data from the child component and update the state.
-  const handleTableDataChange = (data) => {
+  const handleTableDataChange = (data: any | undefined) => {
     setTableData(data);
   };
 
@@ -17,10 +17,10 @@ export default function Home() {
           CSV <span className="text-red-500">VALIDATOR</span>
         </h3>
 
-        {/* Render the FilePicker component with the 'handleTableDataChange' callback passed as a prop */}
+        {/* Render the FilePicker component with the handleTableDataChange callback passed as a prop */}
         <FilePicker onTableDataChange={handleTableDataChange} />
 
-        {/* Use conditional rendering and flex properties to show content based on 'tableData' */}
+        {/* Use conditional rendering to show content based on tableData */}
         {tableData ? (
            <div className="w-full lg:w-8/12" style={{ margin: '0 auto' }}>
             <Datatable tableData={tableData} />
@@ -33,4 +33,6 @@ export default function Home() {
       </div>
     </React.Fragment>
   );
-}
+};
+
+export default Home;

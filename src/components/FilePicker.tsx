@@ -1,9 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, FC } from 'react'
 import papaparse from 'papaparse';
 
-function FilePicker({ onTableDataChange }) {
+interface Tabledata {
+    [key: string]: string | number;
+}
 
-    const [first, setfirst] = useState('')
+interface FilePickerProps {
+    onTableDataChange: (data: Tabledata[])=> void;
+}
+
+const FilePicker:FC <FilePickerProps> = ({ onTableDataChange }: FilePickerProps)=> {
+
+    const [first, setfirst] = useState<string | number>('')
 
     // Event handler for file upload
     const handleFileUpload = (event) => {
@@ -12,7 +20,7 @@ function FilePicker({ onTableDataChange }) {
         // Convert CSV to JSON Using Papaparse Library
         papaparse.parse(file, {
             header: true,
-            complete: function (results) {
+            complete: function (results: any | null): void {
                 console.log("papaparse worked", results);
 
                 setfirst(results.data);
@@ -36,7 +44,7 @@ function FilePicker({ onTableDataChange }) {
                 </> 
                 :
                 <>
-                <label className="text-center lg:text-lg mobile:text-sm font-medium lg:mb-5 mobile:mb-2 text-gray-900 " htmlFor="file_input">Upload a CSV file</label>
+                <label className="text-center lg:text-lg mobile:text-sm font-medium lg:mb-5 mobile:mb-2 text-gray-900 hover:bg-gray-300 cursor-pointer" htmlFor="file_input">Upload a CSV file</label>
                 <input onChange={handleFileUpload} className="bg-black lg:w-1/4 mobile:w-54 mb-10 text-center border border-gray-900 rounded-l cursor-pointer text-white" id="file_input" type="file" />
                 </>
             }
@@ -44,4 +52,4 @@ function FilePicker({ onTableDataChange }) {
     )
 }
 
-export default FilePicker
+export default FilePicker;

@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { CSVLink } from 'react-csv';
 
-const Datatable = ({ tableData }) => {
+interface TabledataItems{
+    [key: string]: string | number;
+}
+
+interface DatatableProps{
+    tableData: TabledataItems[];
+}
+
+const Datatable:FC <DatatableProps> = ({ tableData }) => {
 
     // State to track the edited data
-    const [editedData, setEditedData] = useState(tableData);
+    const [editedData, setEditedData] = useState<TabledataItems[]>(tableData);
 
     // Extracting headers from the first row of the table data
     const headers = Object.keys(editedData[0]);
@@ -15,7 +23,7 @@ const Datatable = ({ tableData }) => {
     });
 
     // Function to validate the name field
-    const isNameValid = (name) => {
+    const isNameValid = (name: string): boolean => {
 
         // Name should not start with a number
         if (/^\d/.test(name)) return false;
@@ -30,13 +38,13 @@ const Datatable = ({ tableData }) => {
     };
 
     // Function to validate the phone number field
-    const isPhoneNumberValid = (phoneNumber) => {
+    const isPhoneNumberValid = (phoneNumber:string):boolean => {
         // Assuming Indian phone numbers are 10 digits long and start with 7, 8, or 9
         return /^[789]\d{9}$/.test(phoneNumber);
     };
 
     // Function to handle data editing
-    const handleEditData = (index, header, value) => {
+    const handleEditData = (index:number, header:string, value:string) => {
         // Make a copy of the edited data to avoid directly modifying the state
         const updatedData = [...editedData];
 
@@ -54,7 +62,7 @@ const Datatable = ({ tableData }) => {
     };
 
     // Function to handle entry deletion with confirmation dialog
-    const handleDeleteEntry = (index) => {
+    const handleDeleteEntry = (index: number) => {
         if (window.confirm('Are you sure you want to delete this entry?')) {
             // Make a copy of the edited data to avoid directly modifying the state
             const updatedData = [...editedData];
@@ -88,7 +96,7 @@ const Datatable = ({ tableData }) => {
                                 <tbody>
 
                                     {/* Rendering table rows */}
-                                    {editedData.map((row, index) => {
+                                    {editedData.map((row:any, index:number) => {
                                         // Check if the name and phone number are valid
                                         const isNameValidated = isNameValid(row['Name']);
                                         const isPhoneNumberValidated = isPhoneNumberValid(row['Phone']);
@@ -119,7 +127,7 @@ const Datatable = ({ tableData }) => {
             <div className="mt-10 text-center">
 
                 {/* CSVLink component to create a download link for the CSV file */}
-                <CSVLink data={csvData} filename={'data.csv'} className="btn text-center bg-black p-2 text-white font-medium ">
+                <CSVLink data={csvData} filename={'data.csv'} className="btn text-center bg-black p-2 text-white font-medium mb-20">
                     Download CSV
                 </CSVLink>
             </div>
